@@ -4,29 +4,37 @@ function DatasetOverview({ analysis }) {
   const summary = analysis.summary;
   const profile = analysis.profile;
 
+  const missingCount =
+    Object.values(
+      profile.missing_values || {}
+    ).reduce(
+      (total, value) => total + value,
+      0
+    );
+
   return (
-    <div>
-      <div>
-        <StatCard
-          title="Rows"
-          value={summary.rows}
-        />
+    <div className="stat-grid">
+      <StatCard
+        title="Rows"
+        value={summary.rows.toLocaleString()}
+      />
 
-        <StatCard
-          title="Columns"
-          value={summary.columns}
-        />
+      <StatCard
+        title="Columns"
+        value={summary.columns}
+      />
 
-        <StatCard
-          title="Numerical Columns"
-          value={profile.numerical_columns.length}
-        />
+      <StatCard
+        title="Numerical Columns"
+        value={
+          profile.numerical_columns.length
+        }
+      />
 
-        <StatCard
-          title="Categorical Columns"
-          value={profile.categorical_columns.length}
-        />
-      </div>
+      <StatCard
+        title="Missing Values"
+        value={missingCount}
+      />
     </div>
   );
 }
